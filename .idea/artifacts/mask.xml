@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="mask">
+    <output-path>$PROJECT_DIR$/out/artifacts/mask</output-path>
+    <root id="archive" name="mask.war" />
+  </artifact>
+</component>
