@@ -1,5 +1,10 @@
 package com.dgut.domain;
 
+import org.springframework.stereotype.Component;
+
+import java.util.Date;
+
+@Component
 public class User {
     private String username; //用户名,唯一,用于登录
     private String name; //真实姓名
@@ -8,9 +13,18 @@ public class User {
     private String id; //身份证号码,唯一
     private String address; //居住地
     private String phone; //手机号码
+    private Date birthday;
     private String role; //管理员或者普通用户
     private Integer status; //预约状态
     private Order order;
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
 
     public Order getOrder() {
         return order;
@@ -102,6 +116,7 @@ public class User {
                 ", id='" + id + '\'' +
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
+                ", birthday=" + birthday +
                 ", role='" + role + '\'' +
                 ", status=" + status +
                 ", order=" + order +
