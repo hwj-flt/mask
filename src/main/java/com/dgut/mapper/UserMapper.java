@@ -1,18 +1,14 @@
 package com.dgut.mapper;
 
 import com.dgut.domain.User;
-<<<<<<< HEAD
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
-=======
 import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
->>>>>>> master
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
+import java.util.List;
 
-<<<<<<< HEAD
 @Repository
 public interface UserMapper {
     @Insert({"insert into user(name,id,username,sex,password,address,phone)value(#{name},#{id},#{username},#{sex},#{password},#{address},#{phone})"})
@@ -20,10 +16,6 @@ public interface UserMapper {
 
     @Select("select * from user where username =#{username} or id=#{id}")
     public User find(@Param("username") String username,@Param("id") String id);
-=======
-import java.util.List;
-@Repository
-public interface UserMapper {
     /*
     管理员页面用户管理，查找所有用户信息
      */
@@ -49,5 +41,4 @@ public interface UserMapper {
      */
     @Update("update user set username=#{username},name=#{name},sex=#{sex},password=#{password},phone=#{phone},role=#{role},status=#{status} where id=#{id}")
     public int updateUserById(User user);
->>>>>>> master
 }

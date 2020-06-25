@@ -1,17 +1,12 @@
 package com.dgut.domain;
 
-<<<<<<< HEAD
-public class Order {
-    private Integer id; //
-    private Integer state; //
-=======
+
 import org.springframework.stereotype.Component;
 
 @Component
 public class Order {
     private Integer id; //User表的id的外键
     private Integer state; //判断预约成功与否
->>>>>>> master
 
     public Integer getId() {
         return id;

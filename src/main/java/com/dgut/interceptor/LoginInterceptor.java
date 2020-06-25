@@ -1,8 +1,5 @@
 package com.dgut.interceptor;
 
-<<<<<<< HEAD
-public class LoginInterceptor {
-=======
 import com.dgut.domain.User;
 import com.dgut.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +31,4 @@ public class LoginInterceptor implements HandlerInterceptor {
         request.getRequestDispatcher("/login.html").forward(request,response);
         return false;
     }
->>>>>>> master
 }

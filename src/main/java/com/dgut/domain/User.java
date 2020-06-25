@@ -1,30 +1,18 @@
 package com.dgut.domain;
 
 import org.springframework.stereotype.Component;
-
-<<<<<<< HEAD
 import java.util.Date;
 
 @Component
-=======
-import java.sql.Date;
-
->>>>>>> master
 public class User {
     private String username; //用户名,唯一,用于登录
     private String name; //真实姓名
     private String sex; //性别
     private String password; //密码
     private String id; //身份证号码,唯一
-<<<<<<< HEAD
     private String address; //居住地
     private String phone; //手机号码
     private Date birthday;
-=======
-    private Date birthday;
-    private String address; //居住地
-    private String phone; //手机号码
->>>>>>> master
     private String role; //管理员或者普通用户
     private Integer status; //预约状态
     private Order order;
@@ -125,15 +113,9 @@ public class User {
                 ", sex='" + sex + '\'' +
                 ", password='" + password + '\'' +
                 ", id='" + id + '\'' +
-<<<<<<< HEAD
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
                 ", birthday=" + birthday +
-=======
-                ", birthday=" + birthday +
-                ", address='" + address + '\'' +
-                ", phone='" + phone + '\'' +
->>>>>>> master
                 ", role='" + role + '\'' +
                 ", status=" + status +
                 ", order=" + order +
