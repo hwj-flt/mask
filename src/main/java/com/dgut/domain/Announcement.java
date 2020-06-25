@@ -4,8 +4,17 @@ import java.util.Date;
 
 public class Announcement {
     private Integer num;
-    private String context;
+    private String content;
     private Date time;
+    private Integer id;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Integer getNum() {
         return num;
@@ -15,12 +24,12 @@ public class Announcement {
         this.num = num;
     }
 
-    public String getContext() {
-        return context;
+    public String getContent() {
+        return content;
     }
 
-    public void setContext(String context) {
-        this.context = context;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public Date getTime() {
@@ -35,8 +44,9 @@ public class Announcement {
     public String toString() {
         return "Announcement{" +
                 "num=" + num +
-                ", context='" + context + '\'' +
+                ", content='" + content + '\'' +
                 ", time=" + time +
+                ", id=" + id +
                 '}';
     }
 }
