@@ -1,5 +1,6 @@
 package com.dgut.domain;
 
+<<<<<<< HEAD
 import java.util.Date;
 
 public class Announcement {
@@ -15,6 +16,17 @@ public class Announcement {
     public void setId(Integer id) {
         this.id = id;
     }
+=======
+
+import org.springframework.stereotype.Component;
+
+import java.util.Date;
+@Component
+public class Announcement {
+    private Integer num; //口罩数量
+    private String context; //公告信息
+    private Date time; //发布时间
+>>>>>>> master
 
     public Integer getNum() {
         return num;
@@ -24,12 +36,21 @@ public class Announcement {
         this.num = num;
     }
 
+<<<<<<< HEAD
     public String getContent() {
         return content;
     }
 
     public void setContent(String content) {
         this.content = content;
+=======
+    public String getContext() {
+        return context;
+    }
+
+    public void setContext(String context) {
+        this.context = context;
+>>>>>>> master
     }
 
     public Date getTime() {
@@ -44,9 +65,14 @@ public class Announcement {
     public String toString() {
         return "Announcement{" +
                 "num=" + num +
+<<<<<<< HEAD
                 ", content='" + content + '\'' +
                 ", time=" + time +
                 ", id=" + id +
+=======
+                ", context='" + context + '\'' +
+                ", time=" + time +
+>>>>>>> master
                 '}';
     }
 }

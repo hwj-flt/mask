@@ -7,6 +7,10 @@
     <context:component-scan base-package="com.dgut.controller"/>
     <mvc:annotation-driven/>
     <mvc:default-servlet-handler/>
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/pages/"/>
         <property name="suffix" value=".jsp"/>
@@ -14,6 +18,7 @@
 <!--    <bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">-->
 <!--        <property name="maxUploadSize" value="5242880"/>-->
 <!--    </bean>-->
+<<<<<<< HEAD
 <!--    <mvc:interceptors>-->
 <!--        <mvc:interceptor>-->
 <!--            <mvc:mapping path="/**"/>-->
@@ -23,4 +28,15 @@
 <!--            <bean class="com.dgut.interceptor.LoginInterceptor"/>-->
 <!--        </mvc:interceptor>-->
 <!--    </mvc:interceptors>-->
+=======
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/css/**"/>
+            <mvc:exclude-mapping path="/js/**"/>
+            <mvc:exclude-mapping path="/img/**"/>
+            <bean class="com.dgut.interceptor.LoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+>>>>>>> master
 </beans>
