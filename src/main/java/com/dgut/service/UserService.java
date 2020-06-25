@@ -1,6 +1,12 @@
 package com.dgut.service;
 
+import com.dgut.domain.User;
+
 public interface UserService {
     //登录验证
-    public boolean checkLogin(String username,String password);
+    boolean checkLogin(String username, String password);
+    //显示用户信息
+    User showUserByUsername(String username);
+    //修改用户信息
+    void updateUser(User user);
 }
