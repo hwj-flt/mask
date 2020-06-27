@@ -1,7 +1,6 @@
 package com.dgut.domain;
 
 import org.springframework.stereotype.Component;
-
 import java.util.Date;
 
 @Component
