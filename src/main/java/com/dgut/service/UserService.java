@@ -8,5 +8,7 @@ public interface UserService {
     //显示用户信息
     User showUserByUsername(String username);
     //修改用户信息
-    void updateUser(User user);
+    boolean updateUser(User user);
+    //预约口罩
+    boolean orderMask(User user);
 }

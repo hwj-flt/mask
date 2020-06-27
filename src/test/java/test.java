@@ -1,3 +1,4 @@
+import com.dgut.domain.User;
 import com.dgut.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +17,7 @@ public class test {
     public void test(){
         //ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:application-context.xml");
         //UserService userService = (UserService) applicationContext.getBean("userService");
-        System.out.println(userService.checkLogin("aaa","111"));
+        User user = userService.showUserByUsername("aaa");
+        System.out.println(user);
     }
 }
