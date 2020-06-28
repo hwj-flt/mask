@@ -5,14 +5,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Order {
-    private Integer id; //User表的id的外键
+    private String id; //User表的id的外键
     private Integer state; //判断预约成功与否
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
