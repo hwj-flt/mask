@@ -9,15 +9,22 @@ public class Announcement {
     private String content; //公告信息
     private Date time; //发布时间
     private Integer id;
+    private String title;
 
-    public Announcement(Integer num, String content, Date time, Integer id) {
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Announcement(Integer num, String content, Date time, Integer id, String title) {
         this.num = num;
         this.content = content;
         this.time = time;
         this.id = id;
-    }
-
-    public Announcement() {
+        this.title = title;
     }
 
     @Override
@@ -27,7 +34,11 @@ public class Announcement {
                 ", content='" + content + '\'' +
                 ", time=" + time +
                 ", id=" + id +
+                ", title='" + title + '\'' +
                 '}';
+    }
+
+    public Announcement() {
     }
 
     public Integer getNum() {

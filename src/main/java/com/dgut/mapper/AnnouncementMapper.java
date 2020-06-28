@@ -20,6 +20,13 @@ public interface AnnouncementMapper {
     //更新公告内容
     @Insert("insert into announcement(num,content,time)value(#{num},#{content},#{time})")
     public void insert(Announcement announcement);
+
+    /**
+     * 通过id查询announcement
+     * @param id
+     */
+    @Select("select * from announcement where id = #{id}")
+    public Announcement findById(int id);
     /*
     查找公告信息
      */
