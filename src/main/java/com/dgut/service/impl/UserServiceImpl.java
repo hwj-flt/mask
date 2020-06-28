@@ -30,6 +30,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean orderMask(User user) {
         user.setStatus(1);
+        user.setRole(null);
         return updateUser(user) && userMapper.insertOrder(user.getId()) > 0;
     }
 }

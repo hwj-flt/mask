@@ -11,13 +11,11 @@ import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -31,79 +29,86 @@ public class MyController {
     private UserService userService;
 //    写/login会导致登录页面无法显示，故用loginSubmit
     @RequestMapping(value = "/loginSubmit")
-    @ResponseBody
     @CrossOrigin
-    public Result login(String username, String password, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String login(@RequestBody Map<String,String> map, HttpSession session,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
+        String username = map.get("username");
+        String password = map.get("password");
         boolean key = userService.checkLogin(username,password);
         if(key){
             session.setAttribute("username",username);
             session.setAttribute("password",password);
-            return new Result(ResultStatus.SUCCESS);
+            //登录成功，去往用户页面
+            return "redirect:/user";
         }else {
-//            request.getRequestDispatcher("/login.html").forward(request,response);
-            return new Result(ResultStatus.ERROR);
+            //登录失败，回到登录页面
+            request.getRequestDispatcher("/login.html").forward(request,response);
+            return null;
         }
     }
 //      注销账号
     @RequestMapping(value = "/logout")
-    @ResponseBody
     @CrossOrigin
-    public Result logout(HttpSession session){
+    public Result logout(HttpSession session,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
         session.invalidate();
-        return new Result(ResultStatus.SUCCESS);
+        request.getRequestDispatcher("/login.html").forward(request,response);
+        return null;
     }
 //      用户页面
     @RequestMapping(value = "/user")
     @ResponseBody
     @CrossOrigin
-    public Result user(HttpSession session){
+    public Result user(HttpSession session,HttpServletRequest request){
         User user = userService.showUserByUsername((String) session.getAttribute("username"));
         JSONObject jsonObject = (JSONObject) JSONObject.toJSON(user);
-        return new Result(ResultStatus.SUCCESS,jsonObject);
+        try {
+            jsonObject.put("msg",request.getParameter("msg"));
+        }finally {
+            return new Result(ResultStatus.SUCCESS,jsonObject);
+        }
     }
 //      修改用户信息
     @RequestMapping(value = "/updateUser")
     @ResponseBody
     @CrossOrigin
-    public Result updateUser(HttpServletRequest request,HttpServletResponse response){
-        User user = new User();
-        user.setUsername(request.getParameter("username"));
-        user.setPassword(request.getParameter("password"));
-        user.setSex(request.getParameter("sex"));
-        user.setAddress(request.getParameter("address"));
-        user.setStatus(Integer.valueOf(request.getParameter("status")));
-        user.setBirthday(Date.valueOf(request.getParameter("birthday")));
-        user.setId(request.getParameter("id"));
-        user.setName(request.getParameter("name"));
-        user.setPhone(request.getParameter("phone"));
+    public ModelAndView updateUser(@RequestBody User user){
+        user.setStatus(null);
+        user.setRole(null);
+        ModelMap model = new ModelMap();
         if(userService.updateUser(user))
-            return new Result(ResultStatus.SUCCESS);
+            model.addAttribute("msg","修改成功");
         else
-            return new Result(ResultStatus.SERVICE_EXCEPTION);
+            model.addAttribute("msg","修改失败");
+        //最后回到用户界面
+        return new ModelAndView("redirect:/user",model, HttpStatus.OK);
     }
     //预约口罩页面判断是否预约过
     @RequestMapping(value = "/orderMask")
     @ResponseBody
     @CrossOrigin
-    public Result orderMask(HttpServletRequest request){
-        User user = userService.showUserByUsername((String) request.getParameter("username"));
+    public ModelAndView orderMask(HttpSession session){
+        User user = userService.showUserByUsername((String) session.getAttribute("username"));
+        //预约过的用户回到用户界面，返回消息该用户已经预约过了
         if(user.getStatus()==1){
             ModelMap model = new ModelMap();
             model.addAttribute("msg","该用户已经预约过了");
-            return new Result(ResultStatus.ERROR,model);
+            return new ModelAndView("redirect:/user",model, HttpStatus.OK);
         }
-        JSONObject jsonObject = (JSONObject) JSONObject.toJSON(user);
-        return new Result(ResultStatus.SUCCESS,jsonObject);
+        return new ModelAndView("redirect:/order");
     }
     //执行预约操作，设置user.status为1，插入一条order数据
     @RequestMapping(value = "/order")
     @ResponseBody
     @CrossOrigin
-    public Result order(HttpSession session){
+    public ModelAndView order(HttpSession session){
         User user = userService.showUserByUsername((String) session.getAttribute("username"));
-        if(userService.orderMask(user))
-            return new Result(ResultStatus.SUCCESS);
-        else
-            return new Result(ResultStatus.SERVICE_EXCEPTION);
+        ModelMap model = new ModelMap();
+        if(userService.orderMask(user)){
+            model.addAttribute("msg","预约成功");
+        }
+        else{
+            model.addAttribute("msg","预约失败");
+        }
+        //回到用户界面
+        return new ModelAndView("redirect:/user",model, HttpStatus.OK);
     }
 }

@@ -18,6 +18,7 @@ public class test {
         //ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:application-context.xml");
         //UserService userService = (UserService) applicationContext.getBean("userService");
         User user = userService.showUserByUsername("aaa");
-        System.out.println(user);
+        userService.orderMask(user);
+//        System.out.println(user);
     }
 }
