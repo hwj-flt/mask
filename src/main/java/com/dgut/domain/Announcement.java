@@ -6,9 +6,27 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 @Component
 public class Announcement {
+    private Integer id; //公告序号
     private Integer num; //口罩数量
     private String context; //公告信息
     private Date time; //发布时间
+    private Date deadline;//截止时间
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Date getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(Date deadline) {
+        this.deadline = deadline;
+    }
 
     public Integer getNum() {
         return num;
@@ -37,9 +55,11 @@ public class Announcement {
     @Override
     public String toString() {
         return "Announcement{" +
-                "num=" + num +
+                "id=" + id +
+                ", num=" + num +
                 ", context='" + context + '\'' +
                 ", time=" + time +
+                ", deadline=" + deadline +
                 '}';
     }
 }

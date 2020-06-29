@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.dgut.common.Result;
 import com.dgut.common.ResultStatus;
 import com.dgut.domain.User;
+import com.dgut.mapper.AnnouncementMapper;
+import com.dgut.service.AnnouncementSevice;
 import com.dgut.service.UserService;
 import org.omg.PortableInterceptor.SUCCESSFUL;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +22,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.Date;
+import java.util.Date;
 import java.util.Map;
 
 @Controller
 public class MyController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private AnnouncementSevice announcementSevice;
 //    写/login会导致登录页面无法显示，故用loginSubmit
     @RequestMapping(value = "/loginSubmit")
     @CrossOrigin
@@ -86,10 +90,16 @@ public class MyController {
     @ResponseBody
     @CrossOrigin
     public ModelAndView orderMask(HttpSession session){
+        Date deadline = announcementSevice.findDeadline();
+        Date nowDate = new Date();
+        ModelMap model = new ModelMap();
+        if(nowDate.after(deadline)){
+            model.addAttribute("msg","截止日期已过，不能预约了，请等下次口罩发布吧!");
+            return new ModelAndView("redirect:/user",model, HttpStatus.OK);
+        }
         User user = userService.showUserByUsername((String) session.getAttribute("username"));
         //预约过的用户回到用户界面，返回消息该用户已经预约过了
         if(user.getStatus()==1){
-            ModelMap model = new ModelMap();
             model.addAttribute("msg","该用户已经预约过了");
             return new ModelAndView("redirect:/user",model, HttpStatus.OK);
         }

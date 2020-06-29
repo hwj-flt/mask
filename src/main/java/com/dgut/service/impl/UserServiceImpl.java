@@ -1,11 +1,15 @@
 package com.dgut.service.impl;
 
+import com.dgut.domain.Announcement;
 import com.dgut.domain.User;
+import com.dgut.mapper.AnnouncementMapper;
 import com.dgut.mapper.UserMapper;
 import com.dgut.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
@@ -33,4 +37,5 @@ public class UserServiceImpl implements UserService {
         user.setRole(null);
         return updateUser(user) && userMapper.insertOrder(user.getId()) > 0;
     }
+
 }

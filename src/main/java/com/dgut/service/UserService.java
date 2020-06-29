@@ -2,6 +2,8 @@ package com.dgut.service;
 
 import com.dgut.domain.User;
 
+import java.util.Date;
+
 public interface UserService {
     //登录验证
     boolean checkLogin(String username, String password);
