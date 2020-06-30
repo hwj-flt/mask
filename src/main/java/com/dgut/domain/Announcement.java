@@ -1,24 +1,16 @@
 package com.dgut.domain;
-import org.springframework.stereotype.Component;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 
-
-@Component
 public class Announcement {
-    private Integer num; //口罩数量
-    private String content; //公告信息
-    private Date time; //发布时间
+    private Integer num;
+    private String content;
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss", timezone = "GMT+8")
+    private Date time;
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss", timezone = "GMT+8")
+    private Date deadline;
     private Integer id;
-
-    public Announcement(Integer num, String content, Date time, Integer id) {
-        this.num = num;
-        this.content = content;
-        this.time = time;
-        this.id = id;
-    }
-
-    public Announcement() {
-    }
+    private String title;
 
     @Override
     public String toString() {
@@ -26,9 +18,48 @@ public class Announcement {
                 "num=" + num +
                 ", content='" + content + '\'' +
                 ", time=" + time +
+                ", deadline=" + deadline +
                 ", id=" + id +
+                ", title='" + title + '\'' +
                 '}';
     }
+
+    public Announcement(Integer num, String content, Date time, Date deadline, Integer id, String title) {
+        this.num = num;
+        this.content = content;
+        this.time = time;
+        this.deadline = deadline;
+        this.id = id;
+        this.title = title;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Date getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(Date deadline) {
+        this.deadline = deadline;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Announcement() {
+    }
+
 
     public Integer getNum() {
         return num;
@@ -54,11 +85,4 @@ public class Announcement {
         this.time = time;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 }

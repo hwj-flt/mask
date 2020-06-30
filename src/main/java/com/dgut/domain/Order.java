@@ -1,12 +1,10 @@
 package com.dgut.domain;
+import java.util.Date;
 
-
-import org.springframework.stereotype.Component;
-
-@Component
 public class Order {
-    private Integer id; //User表的id的外键
-    private Integer state; //判断预约成功与否
+
+    private Integer id; 
+    private Date ordertime;
 
     public Integer getId() {
         return id;
@@ -16,19 +14,19 @@ public class Order {
         this.id = id;
     }
 
-    public Integer getState() {
-        return state;
+    public Date getOrdertime() {
+        return ordertime;
     }
 
-    public void setState(Integer state) {
-        this.state = state;
+    public void setOrdertime(Date ordertime) {
+        this.ordertime = ordertime;
     }
 
     @Override
     public String toString() {
         return "Order{" +
-                "id='" + id + '\'' +
-                ", state='" + state + '\'' +
+                "id=" + id +
+                ", ordertime=" + ordertime +
                 '}';
     }
 }
