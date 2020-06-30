@@ -10,6 +10,8 @@ public class Announcement {
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss",timezone = "GMT+8")
     private Date deadline;
     private Integer id;
+    private String title;
+
 
     public Date getDeadline() {
         return deadline;
@@ -27,6 +29,36 @@ public class Announcement {
         this.id = id;
     }
   
+    public Announcement() {
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Announcement(Integer num, String content, Date time, Integer id, String title) {
+        this.num = num;
+        this.content = content;
+        this.time = time;
+        this.id = id;
+        this.title = title;
+    }
+
+    @Override
+    public String toString() {
+        return "Announcement{" +
+                "num=" + num +
+                ", content='" + content + '\'' +
+                ", time=" + time +
+                ", id=" + id +
+                ", title='" + title + '\'' +
+                '}';
+
+    }
+
     public Announcement() {
     }
 

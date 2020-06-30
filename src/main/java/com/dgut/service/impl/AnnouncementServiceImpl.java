@@ -3,6 +3,7 @@ package com.dgut.service.impl;
 import com.dgut.domain.Announcement;
 import com.dgut.mapper.AnnouncementMapper;
 import com.dgut.service.AnnouncementService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,11 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     }
     public void insert(Announcement announcement){
         announcementMapper.insert(announcement);
+    }
+
+    @Override
+    public Announcement findById(@Param("id") int id) {
+        return announcementMapper.findById(id);
     }
 
 }

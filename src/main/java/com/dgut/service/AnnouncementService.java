@@ -9,4 +9,5 @@ public interface AnnouncementService {
     public Announcement show();
     public List<Announcement> showall();
     public void insert(Announcement announcement);
+    public Announcement findById(int id);
 }

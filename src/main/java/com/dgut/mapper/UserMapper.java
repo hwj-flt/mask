@@ -16,6 +16,7 @@ public interface UserMapper {
     //查询是否用户注册的用户名或id有重复
     @Select("select * from user where username =#{username} or id=#{id}")
     public User find(@Param("username") String username,@Param("id") String id);
+
   
     //管理员查询所有用户
     @Select("select username from user")

@@ -9,6 +9,7 @@ import com.dgut.service.AnnouncementService;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.gson.Gson;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -22,10 +23,11 @@ import java.io.IOException;
 import java.util.*;
 
 @Controller
+@RequestMapping("/announcement")
 public class AnnouncementController {
     @Autowired
     private AnnouncementService announcementService;
-    @RequestMapping("toinsert")
+    @RequestMapping("/toinsert")
     public String toinsert(){
         return "insert";
     }
@@ -36,8 +38,9 @@ public class AnnouncementController {
     public Result insert(@RequestBody Announcement a){
         Calendar calendar = Calendar.getInstance();
         Date time=calendar.getTime();
-        a.setContent(a.getContent());
-        a.setNum(a.getNum());
+        a.setContent(request.getParameter("content"));
+        a.setNum(Integer.valueOf(request.getParameter("num")));
+        a.setTitle(request.getParameter("title"));
         a.setTime(time);
         a.setDeadline(a.getDeadline());
         announcementService.insert(a);
@@ -53,12 +56,20 @@ public class AnnouncementController {
         JSONObject jsonObject= (JSONObject) JSONObject.toJSON(a);
         return new Result(ResultStatus.SUCCESS,jsonObject);
     }
-    @RequestMapping("showall")
+    @RequestMapping("/showall")
     @ResponseBody
     @CrossOrigin
     public Result showall(){
         List<Announcement> a= announcementService.showall();
         JSONArray jsonArray = (JSONArray) JSONArray.toJSON(a);
         return new Result(ResultStatus.SUCCESS,jsonArray);
+    }
+    @RequestMapping("/find")
+    @ResponseBody
+    @CrossOrigin
+    public Result findById(@Param("id") int id){
+        Announcement a = announcementService.findById(id);
+        JSONObject jsonObject= (JSONObject) JSONObject.toJSON(a);
+        return new Result(ResultStatus.SUCCESS,jsonObject);
     }
 }
