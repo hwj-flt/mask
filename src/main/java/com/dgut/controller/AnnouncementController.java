@@ -6,6 +6,7 @@ import com.dgut.domain.Announcement;
 import com.dgut.domain.Result;
 import com.dgut.domain.ResultStatus;
 import com.dgut.service.AnnouncementService;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.gson.Gson;
 import org.apache.ibatis.annotations.Insert;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.TimeZone;
+import java.util.*;
 
 @Controller
 public class AnnouncementController {
@@ -35,16 +33,17 @@ public class AnnouncementController {
     @RequestMapping("/insert")
     @ResponseBody
     @CrossOrigin
-    public Result insert(HttpServletRequest request){
-        Announcement a =new Announcement();
+    public Result insert(@RequestBody Announcement a){
         Calendar calendar = Calendar.getInstance();
         Date time=calendar.getTime();
-        a.setContent(request.getParameter("content"));
-        a.setNum(Integer.valueOf(request.getParameter("num")));
+        a.setContent(a.getContent());
+        a.setNum(a.getNum());
         a.setTime(time);
+        a.setDeadline(a.getDeadline());
         announcementService.insert(a);
         return new Result(ResultStatus.SUCCESS);
     }
+
     @PostMapping("/show")
     @ResponseBody
     @CrossOrigin
@@ -52,8 +51,6 @@ public class AnnouncementController {
         Announcement a =new Announcement();
         a=announcementService.show();
         JSONObject jsonObject= (JSONObject) JSONObject.toJSON(a);
-        System.out.println(jsonObject.toString());
-
         return new Result(ResultStatus.SUCCESS,jsonObject);
     }
     @RequestMapping("showall")

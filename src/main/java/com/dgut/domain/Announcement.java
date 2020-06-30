@@ -1,12 +1,25 @@
 package com.dgut.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class Announcement {
     private Integer num;
     private String content;
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss",timezone = "GMT+8")
     private Date time;
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss",timezone = "GMT+8")
+    private Date deadline;
     private Integer id;
+
+    public Date getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(Date deadline) {
+        this.deadline = deadline;
+    }
 
     public Integer getId() {
         return id;
@@ -46,6 +59,7 @@ public class Announcement {
                 "num=" + num +
                 ", content='" + content + '\'' +
                 ", time=" + time +
+                ", deadline=" + deadline +
                 ", id=" + id +
                 '}';
     }

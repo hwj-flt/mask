@@ -19,6 +19,6 @@ public interface AnnouncementMapper {
     @Select("select * from announcement")
     public List<Announcement> showall();
     //更新公告内容
-    @Insert("insert into announcement(num,content,time)value(#{num},#{content},#{time})")
+    @Insert("insert into announcement(num,content,time,deadline)value(#{num},#{content},#{time},#{deadline})")
     public void insert(Announcement announcement);
 }
