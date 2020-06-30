@@ -20,6 +20,7 @@
     密码:<input type="password" name="password" value="password"> <br>
     居住地:<input type="text" name="address" value="address"> <br>
     电话号码:<input type="text" name="phone" value="phone"> <br>
+    生日:<input type="text" name="birthday" value="1998-08-07"> <br>
     <button type="submit">提交</button>
 </form>
 </body>

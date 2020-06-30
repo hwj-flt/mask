@@ -1,15 +1,35 @@
 package com.dgut.domain;
-import org.springframework.stereotype.Component;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 
-
-@Component
 public class Announcement {
-    private Integer num; //口罩数量
-    private String content; //公告信息
-    private Date time; //发布时间
+    private Integer num;
+    private String content;
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss",timezone = "GMT+8")
+    private Date time;
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss",timezone = "GMT+8")
+    private Date deadline;
     private Integer id;
     private String title;
+
+
+    public Date getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(Date deadline) {
+        this.deadline = deadline;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+  
+    public void setId(Integer id) {
+        this.id = id;
+    }
+  
+    public Announcement() {
 
     public String getTitle() {
         return title;
@@ -36,6 +56,7 @@ public class Announcement {
                 ", id=" + id +
                 ", title='" + title + '\'' +
                 '}';
+
     }
 
     public Announcement() {
@@ -64,12 +85,14 @@ public class Announcement {
     public void setTime(Date time) {
         this.time = time;
     }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
+  
+    @Override
+    public String toString() {
+        return "Announcement{" +
+                "num=" + num +
+                ", content='" + content + '\'' +
+                ", time=" + time +
+                ", deadline=" + deadline +
+                ", id=" + id +
+                '}';
 }
