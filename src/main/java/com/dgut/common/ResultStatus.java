@@ -1,4 +1,4 @@
-package com.dgut.domain;
+package com.dgut.common;
 
 /**
  *返回参数错误码枚举

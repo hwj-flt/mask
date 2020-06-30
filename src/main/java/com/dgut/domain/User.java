@@ -20,6 +20,9 @@ public class User {
     private Integer status; //预约状态
     private Order order;
 
+    public User() {
+    }
+
     public Date getBirthday() {
         return birthday;
     }

@@ -9,4 +9,6 @@ public interface AnnouncementService {
     public Announcement show();
     public List<Announcement> showall();
     public void insert(Announcement announcement);
+    //获取截止时间
+    Date findDeadline();
 }

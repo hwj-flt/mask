@@ -21,4 +21,7 @@ public interface AnnouncementMapper {
     //更新公告内容
     @Insert("insert into announcement(num,content,time,deadline)value(#{num},#{content},#{time},#{deadline})")
     public void insert(Announcement announcement);
+    //查截止时间
+    @Select("select deadline from announcement where id=(select max(id) from announcement)")
+    public Date findDeadline();
 }

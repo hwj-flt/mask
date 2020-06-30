@@ -14,14 +14,23 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     @Autowired
     private AnnouncementMapper announcementMapper;
 
+    @Override
     public Announcement show(){
         return announcementMapper.show();
     }
+
+    @Override
     public List<Announcement> showall(){
         return announcementMapper.showall();
     }
+
+    @Override
     public void insert(Announcement announcement){
         announcementMapper.insert(announcement);
     }
 
+    @Override
+    public Date findDeadline() {
+        return announcementMapper.findDeadline();
+    }
 }

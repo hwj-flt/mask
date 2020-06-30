@@ -1,4 +1,4 @@
-package com.dgut.domain;
+package com.dgut.common;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
