@@ -1,10 +1,10 @@
 package com.dgut.domain;
-
 import java.util.Date;
 
 public class Order {
-    private Integer id; //
+    private Integer id; 
     private Date ordertime;
+
 
     public Integer getId() {
         return id;

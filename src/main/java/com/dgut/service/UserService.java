@@ -1,11 +1,7 @@
 package com.dgut.service;
-
 import com.dgut.domain.Order;
 import com.dgut.domain.User;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
-
 
 public interface UserService {
     void register(User user);
@@ -18,4 +14,6 @@ public interface UserService {
     public int selectnum();
     public int deleteOrder();
     public int updateStatu();
+    //登录验证
+    public boolean checkLogin(String username,String password);
 }

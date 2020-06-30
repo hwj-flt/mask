@@ -2,7 +2,6 @@ package com.dgut.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.stereotype.Component;
-
 import java.util.Date;
 
 @Component

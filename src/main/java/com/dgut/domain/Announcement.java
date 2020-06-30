@@ -1,7 +1,5 @@
 package com.dgut.domain;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
-
 import java.util.Date;
 
 public class Announcement {
@@ -24,9 +22,12 @@ public class Announcement {
     public Integer getId() {
         return id;
     }
-
+  
     public void setId(Integer id) {
         this.id = id;
+    }
+  
+    public Announcement() {
     }
 
     public Integer getNum() {
@@ -52,7 +53,7 @@ public class Announcement {
     public void setTime(Date time) {
         this.time = time;
     }
-
+  
     @Override
     public String toString() {
         return "Announcement{" +
@@ -62,5 +63,4 @@ public class Announcement {
                 ", deadline=" + deadline +
                 ", id=" + id +
                 '}';
-    }
 }
