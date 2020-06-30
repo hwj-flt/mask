@@ -1,6 +1,7 @@
 package com.dgut.common;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.gson.Gson;
 
 /**
@@ -15,6 +16,7 @@ public class Result<T> {
     //返回信息
     private String message;
     //返回对象
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss",timezone = "GMT+8")
     private T data;
 
     public Result(){
@@ -22,7 +24,7 @@ public class Result<T> {
         this.message = ResultStatus.SUCCESS.getReasonPhrase();
     }
 
-    public Result( ResultStatus resultStatus, T data){
+    public Result( ResultStatus resultStatus,    T data){
         this.data = data;
         this.code = resultStatus.value ();
         this.message = resultStatus.getReasonPhrase ();

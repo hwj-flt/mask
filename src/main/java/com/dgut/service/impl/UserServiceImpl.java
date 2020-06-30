@@ -6,37 +6,58 @@ import com.dgut.mapper.UserMapper;
 import com.dgut.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service("UserService")
-
-
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
+    @Override
     public User find(String username,String id) {
         return userMapper.find(username, id);
     }
 
+    @Override
     public void register(User user) {
             userMapper.register(user);
     }
-    public List<User> findAll(){return userMapper.findAll();}
 
     @Override
-    public List<Order> findOrder() {
-        return null;
+    public List<User> findAll(){
+        return userMapper.findAll();
     }
 
-    public User findUserByUsername(String username){return userMapper.findUserByUsername(username);}
-    public boolean RoleupdateUserByUsername(User user){return userMapper.RoleupdateUserByUsername(user) > 0;}
-    public List<User> choose(Integer num){return userMapper.choose(num);}
-    public int selectnum(){return userMapper.selectnum();}
-    public int deleteOrder(){return userMapper.deleteOrder();}
-    public int updateStatu(){return userMapper.updateStatu();}
+    @Override
+    public User findUserByUsername(String username){
+        return userMapper.findUserByUsername(username);
+    }
+
+    @Override
+    public boolean RoleupdateUserByUsername(User user){
+        return userMapper.RoleupdateUserByUsername(user) > 0;
+    }
+
+    @Override
+    public List<User> choose(Integer num){
+        return userMapper.choose(num);
+    }
+
+    @Override
+    public int selectnum(){
+        return userMapper.selectnum();
+    }
+
+    @Override
+    public int deleteOrder(){
+        return userMapper.deleteOrder();
+    }
+
+    @Override
+    public int updateStatu(){
+        return userMapper.updateStatu();
+    }
 
     @Override
     public boolean checkLogin(String username,String password) {

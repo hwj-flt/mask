@@ -2,6 +2,7 @@ package com.dgut.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.stereotype.Component;
+
 import java.util.Date;
 
 @Component
@@ -18,6 +19,9 @@ public class User {
     private String role; //管理员或者普通用户
     private Integer status; //预约状态
     private Order order;
+
+    public User() {
+    }
 
     public Date getBirthday() {
         return birthday;
