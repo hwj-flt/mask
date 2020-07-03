@@ -20,6 +20,11 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     }
 
     @Override
+    public Announcement findById(int id) {
+        return announcementMapper.findById(id);
+    }
+
+    @Override
     public List<Announcement> showall(){
         return announcementMapper.showall();
     }

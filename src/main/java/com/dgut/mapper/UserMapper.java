@@ -10,12 +10,12 @@ import java.util.List;
 @Repository
 public interface UserMapper {
     //用户注册
-    @Insert({"insert into user(name,id,username,sex,password,address,phone,birthday)value(#{name},#{id},#{username},#{sex},#{password},#{address},#{phone},#{birthday})"})
+    @Insert({"insert into user(name,id,username,sex,password,phone,birthday,status,role)value(#{name},#{id},#{username},#{sex},#{password},#{phone},#{birthday},#{status},#{role})"})
     public void register(User user);
 
     //查询是否用户注册的用户名或id有重复
-    @Select("select * from user where username =#{username} or id=#{id}")
-    public User find(@Param("username") String username, @Param("id") String id);
+    @Select("select * from user where username =#{username} or id=#{id} or phone=#{phone}")
+    public User find(@Param("username") String username, @Param("id") String id,@Param("phone") String phone);
 
 
     //管理员查询所有用户用户名
@@ -23,9 +23,15 @@ public interface UserMapper {
     public List<User> findAll();
 
     //管理员点击用户名进入用户主页
-    @Select("select * from user LEFT JOIN `order` ON order.id=user.id where username=#{username}")
-    @Results(value = {@Result(property = "id",column = "id"),@Result(property = "order.id",column = "id")})
+//    @Select("select * from user LEFT JOIN `order` ON order.id=user.id where username=#{username}")
+//    @Results(value = {@Result(property = "id",column = "id"),@Result(property = "order.id",column = "id")})
+    @Select("select * from user where username=#{username}")
     User findUserByUsername(String username);
+
+    @Select("select * from user where id = #{id}")
+    public User findUserByUserId(String id);
+    @Select("select * from user where phone = #{phone}")
+    public User findUserByPhone(String phone);
 
     //管理员修改用户信息
     @Update("update user set name=#{name},sex=#{sex},password=#{password},id=#{id},birthday=#{birthday},address=#{address},"+
@@ -55,10 +61,9 @@ public interface UserMapper {
             "<if test='name != null '>,name=#{name}</if>" +
             "<if test='sex != null '>,sex=#{sex}</if>" +
             "<if test='birthday != null '>,birthday=#{birthday}</if>" +
-            "<if test='address != null '>,address=#{address}</if>" +
             "<if test='phone != null '>,phone=#{phone}</if>" +
             "<if test='status != null '>,status=#{status}</if>" +
-            "<if test='role != null '>,status=#{status}</if> " +
+            "<if test='role != null '>,role=#{role}</if> " +
             "where username=#{username}</script>")
     int updateUserByUsername(User user);
     /*
@@ -66,4 +71,6 @@ public interface UserMapper {
     */
     @Insert("Insert into `order`(id) values(#{id})")
     int insertOrder(String id);
+    @Insert("Insert into `order`(id,addrid) values(#{id},#{addrid})")
+    public int addOrder(Order order);
 }

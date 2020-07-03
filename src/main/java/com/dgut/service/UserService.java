@@ -11,11 +11,15 @@ public interface UserService {
     //用户注册
     void register(User user);
     //查询是否用户注册的用户名或id有重复
-    public User find(String username, String id);
+    public User find(String username, String id, String phone);
     //管理员查询所有用户
     public List<User> findAll();
     //管理员点击用户名进入用户主页
     public User findUserByUsername(String username);
+
+    public User findUserByUserId(String id);
+
+    public User findUserByPhone(String phone);
     //管理员修改用户信息
     public boolean RoleupdateUserByUsername(User user);
     //在user表里随机选取同时存在order表的数据(即有预约的用户),选取数量为公告栏公布的口罩数量
@@ -34,4 +38,5 @@ public interface UserService {
     boolean updateUser(User user);
     //预约口罩
     boolean orderMask(User user);
+    public int addOrder(Order order);
 }

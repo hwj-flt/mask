@@ -4,7 +4,11 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.dgut.common.Result;
 import com.dgut.common.ResultStatus;
+import com.dgut.common.Uuid;
 import com.dgut.domain.*;
+import com.dgut.domain.Vo.UserNewPawVo;
+import com.dgut.domain.Vo.UserRegVo;
+import com.dgut.domain.Vo.UserVo;
 import com.dgut.service.AnnouncementService;
 import com.dgut.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +33,12 @@ public class UserController {
     private UserService userService;
     @Autowired
     private AnnouncementService announcementService;
+    @RequestMapping("/getYZM")
+    @ResponseBody
+    public Result getYZM(){
+        String str = Uuid.getRandomNum(4);
+        return new Result(ResultStatus.SUCCESS,str);
+    }
 
     /*
     * 用户
@@ -42,42 +52,51 @@ public class UserController {
     @RequestMapping("/register")
     @ResponseBody
     @CrossOrigin
-    public Result register(@RequestBody User u) {
-        String username = u.getUsername();
-        u.setUsername(u.getUsername());
-        String id = u.getId();
-        u.setId(u.getId());
-        u.setName(u.getName());
-        u.setSex(u.getSex());
-        u.setAddress(u.getAddress());
-        u.setPassword(u.getPassword());
-        u.setPhone(u.getPhone());
-        u.setBirthday(u.getBirthday());
-        if (userService.find(username, id) == null) {
-            userService.register(u);
-            return new Result(ResultStatus.SUCCESS);
-        } else {
-            return new Result(ResultStatus.SERVICE_EXCEPTION);
+    public Result register(@RequestBody UserRegVo userRegVo) {
+        if(userRegVo.getYzm().equals(userRegVo.getTureYZM())){
+            User u = new User();
+            u.setPassword(userRegVo.getPassword());
+            u.setName(userRegVo.getName());
+            u.setStatus(0);
+            u.setRole(0);
+            u.setBirthday(new Date());
+            u.setId(Uuid.getRandomNum(7));
+            u.setPhone(userRegVo.getPhone());
+            u.setSex(userRegVo.getSex());
+            u.setUsername(userRegVo.getUsername());
+            if (userService.find(u.getUsername(), u.getId(),u.getPhone()) == null) {
+                userService.register(u);
+                return new Result(ResultStatus.SUCCESS);
+            } else {
+                return new Result(ResultStatus.SERVICE_EXCEPTION);//5000
+            }
+        }else{
+            return new Result(ResultStatus.USER_NOT_EXISTS);//1401
         }
     }
 
     //写/login会导致登录页面无法显示，故用loginSubmit
     //登录
-    @RequestMapping(value = "/loginSubmit")
+    @PostMapping(value = "/loginSubmit")
+    @ResponseBody
     @CrossOrigin
-    public String login(@RequestBody Map<String,String> map, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username = map.get("username");
-        String password = map.get("password");
+    public Result login(@RequestBody User user, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String username = user.getUsername();
+        String password = user.getPassword();
+
         boolean key = userService.checkLogin(username,password);
         if(key){
             session.setAttribute("username",username);
             session.setAttribute("password",password);
-            //登录成功，去往用户页面
-            return "redirect:/user";
+            //登录成功将用户id和username返回给前端
+            UserVo userVo = new UserVo(userService.findUserByUsername(username).getId(),userService.findUserByUsername(username).getName());
+            JSONObject jsonObject = (JSONObject) JSONObject.toJSON(userVo);
+            return new Result(ResultStatus.SUCCESS,jsonObject);
         }else {
             //登录失败，回到登录页面
-            request.getRequestDispatcher("/login.html").forward(request,response);
-            return null;
+//            request.getRequestDispatcher("/login.html").forward(request,response);
+//            return null;
+            return new Result(ResultStatus.SERVICE_EXCEPTION);
         }
     }
 
@@ -86,7 +105,7 @@ public class UserController {
     @CrossOrigin
     public Result logout(HttpSession session,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
         session.invalidate();
-        request.getRequestDispatcher("/login.html").forward(request,response);
+//        request.getRequestDispatcher("/login.html").forward(request,response);
         return null;
     }
 
@@ -118,6 +137,54 @@ public class UserController {
             model.addAttribute("msg","修改失败");
         //最后回到用户界面
         return new ModelAndView("redirect:/user",model, HttpStatus.OK);
+    }
+    @RequestMapping(value = "/updateUserName")
+    @ResponseBody
+    @CrossOrigin
+    public Result updateUserName(@RequestBody User user){
+        User user1 = userService.findUserByUserId(user.getId());
+        user1.setName(user.getName());
+        Boolean boo = userService.updateUser(user1);
+        if(boo){
+            JSONObject jsonObject = (JSONObject) JSONObject.toJSON(user1);
+            return new Result(ResultStatus.SUCCESS,jsonObject);
+        }else {
+            return new Result(ResultStatus.ERROR);
+        }
+    }
+    @RequestMapping(value = "/updPawByPhone")
+    @ResponseBody
+    @CrossOrigin
+    public Result updatePaw(@RequestBody UserRegVo userRegVo){
+        User user = userService.findUserByPhone(userRegVo.getPhone());
+        if (userRegVo.getYzm().equals(userRegVo.getTureYZM())) {
+            user.setPassword(userRegVo.getPassword());
+            Boolean boo = userService.updateUser(user);
+            if(boo){
+                return new Result(ResultStatus.SUCCESS);
+            }else {
+                return new Result(ResultStatus.USER_NOT_EXISTS);
+            }
+        }else {
+            return new Result(ResultStatus.ERROR);
+        }
+    }
+    @RequestMapping(value = "/updateUserPaw")
+    @ResponseBody
+    @CrossOrigin
+    public Result updateUserPaw(@RequestBody UserNewPawVo userNewPawVo){
+        User user1 = userService.findUserByUserId(userNewPawVo.getId());
+        if(user1.getPassword().equals(userNewPawVo.getPassword())){
+            user1.setPassword(userNewPawVo.getNewPaw());
+            Boolean boo = userService.updateUser(user1);
+            if(boo){
+                return new Result(ResultStatus.SUCCESS);
+            }else {
+                return new Result(ResultStatus.USER_NOT_EXISTS);//1401
+            }
+        }else{
+            return new Result(ResultStatus.ERROR);//4000
+        }
     }
 
     //预约口罩页面判断是否预约过
@@ -157,7 +224,21 @@ public class UserController {
         //回到用户界面
         return new ModelAndView("redirect:/user",model, HttpStatus.OK);
     }
-
+    @PostMapping(value = "/addOrder")
+    @ResponseBody
+    @CrossOrigin
+    public Result addOrder(@RequestBody Order order){
+        User user = userService.findUserByUserId(order.getId());
+        if(user.getStatus()==1){
+            return new Result(ResultStatus.ERROR);
+        }else {
+            user.setStatus(1);
+            System.out.println(user);
+            userService.updateUser(user);
+            int num = userService.addOrder(order);
+            return new Result(ResultStatus.SUCCESS);
+        }
+    }
     /*
      * 管理员
      * */
@@ -189,7 +270,6 @@ public class UserController {
         user.setPassword(user.getPassword());
         user.setUsername(user.getUsername());
         user.setSex(user.getSex());
-        user.setAddress(user.getAddress());
         user.setStatus(user.getStatus());
         user.setBirthday(user.getBirthday());
         user.setId(user.getId());

@@ -12,13 +12,28 @@ public class User {
     private String sex; //性别
     private String password; //密码
     private String id; //身份证号码,唯一
-    private String address; //居住地
     private String phone; //手机号码
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss",timezone = "GMT+8")
     private Date birthday;
-    private String role; //管理员或者普通用户
+    private Integer role; //管理员或者普通用户
     private Integer status; //预约状态
-    private Order order;
+
+    public User(String username, String name, String sex, String password, String id, String phone, Date birthday, Integer role, Integer status) {
+        this.username = username;
+        this.name = name;
+        this.sex = sex;
+        this.password = password;
+        this.id = id;
+        this.phone = phone;
+        this.birthday = birthday;
+        this.role = role;
+        this.status = status;
+    }
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 
     public User() {
     }
@@ -29,14 +44,6 @@ public class User {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
     }
 
     public String getUsername() {
@@ -79,14 +86,6 @@ public class User {
         this.id = id;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getPhone() {
         return phone;
     }
@@ -95,11 +94,11 @@ public class User {
         this.phone = phone;
     }
 
-    public String getRole() {
+    public Integer getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Integer role) {
         this.role = role;
     }
 
@@ -119,12 +118,10 @@ public class User {
                 ", sex='" + sex + '\'' +
                 ", password='" + password + '\'' +
                 ", id='" + id + '\'' +
-                ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
                 ", birthday=" + birthday +
-                ", role='" + role + '\'' +
+                ", role=" + role +
                 ", status=" + status +
-                ", order=" + order +
                 '}';
     }
 }

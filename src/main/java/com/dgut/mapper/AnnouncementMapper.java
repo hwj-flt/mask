@@ -24,4 +24,6 @@ public interface AnnouncementMapper {
     //查截止时间
     @Select("select deadline from announcement where id=(select max(id) from announcement)")
     public Date findDeadline();
+    @Select("select * from announcement where id = #{id}")
+    public Announcement findById(int id);
 }

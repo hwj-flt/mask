@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface AnnouncementService {
     public Announcement show();
+    public Announcement findById(int id);
     public List<Announcement> showall();
     public void insert(Announcement announcement);
     //获取截止时间

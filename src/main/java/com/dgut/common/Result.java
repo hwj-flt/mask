@@ -30,10 +30,13 @@ public class Result<T> {
         this.message = resultStatus.getReasonPhrase ();
 
     }
+//    public Result(ResultStatus resultStatus){
+//        this(resultStatus,null);
+//    }
     public Result(ResultStatus resultStatus){
-        this(resultStatus,null);
+        this.code = resultStatus.value ();
+        this.message = resultStatus.getReasonPhrase ();
     }
-
     public void setResult(ResultStatus resultStatus){
       this.code = resultStatus.value();
       this.message = resultStatus.getReasonPhrase();

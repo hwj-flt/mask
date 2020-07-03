@@ -15,8 +15,8 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public User find(String username,String id) {
-        return userMapper.find(username, id);
+    public User find(String username,String id, String phone) {
+        return userMapper.find(username, id, phone);
     }
 
     @Override
@@ -32,6 +32,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUserByUsername(String username){
         return userMapper.findUserByUsername(username);
+    }
+
+    @Override
+    public User findUserByUserId(String id) {
+        return userMapper.findUserByUserId(id);
+    }
+
+    @Override
+    public User findUserByPhone(String phone) {
+        return userMapper.findUserByPhone(phone);
     }
 
     @Override
@@ -80,5 +90,10 @@ public class UserServiceImpl implements UserService {
         user.setStatus(1);
         user.setRole(null);
         return updateUser(user) && userMapper.insertOrder(user.getId()) > 0;
+    }
+
+    @Override
+    public int addOrder(Order order) {
+        return userMapper.addOrder(order);
     }
 }

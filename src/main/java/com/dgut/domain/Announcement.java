@@ -11,7 +11,16 @@ public class Announcement {
     private Date time;
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss",timezone = "GMT+8")
     private Date deadline;
+    private String title;
     private Integer id;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public Date getDeadline() {
         return deadline;
@@ -60,6 +69,7 @@ public class Announcement {
                 ", content='" + content + '\'' +
                 ", time=" + time +
                 ", deadline=" + deadline +
+                ", title='" + title + '\'' +
                 ", id=" + id +
                 '}';
     }
